@@ -1,6 +1,13 @@
+import styled from "styled-components";
 import { useState, useEffect, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { AccountBookContext } from "../context/AccountBookContext";
+
+const FormWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+`;
 
 const AccountBookForm = () => {
   const { setMonthData, selectedMonth } = useContext(AccountBookContext);
@@ -81,37 +88,39 @@ const AccountBookForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="date"
-        name="date"
-        value={formData.date}
-        onChange={handleChange}
-        placeholder="YYYY-MM-DD"
-      />
-      <input
-        type="text"
-        name="item"
-        value={formData.item}
-        onChange={handleChange}
-        placeholder="지출 항목"
-      />
-      <input
-        type="number"
-        name="amount"
-        value={formData.amount}
-        onChange={handleChange}
-        placeholder="지출 금액"
-      />
-      <input
-        type="text"
-        name="description"
-        value={formData.description}
-        onChange={handleChange}
-        placeholder="지출 내용"
-      />
-      <button type="submit">저장</button>
-    </form>
+    <FormWrapper>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="date"
+          name="date"
+          value={formData.date}
+          onChange={handleChange}
+          placeholder="YYYY-MM-DD"
+        />
+        <input
+          type="text"
+          name="item"
+          value={formData.item}
+          onChange={handleChange}
+          placeholder="지출 항목"
+        />
+        <input
+          type="number"
+          name="amount"
+          value={formData.amount}
+          onChange={handleChange}
+          placeholder="지출 금액"
+        />
+        <input
+          type="text"
+          name="description"
+          value={formData.description}
+          onChange={handleChange}
+          placeholder="지출 내용"
+        />
+        <button type="submit">저장</button>
+      </form>
+    </FormWrapper>
   );
 };
 

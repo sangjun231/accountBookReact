@@ -17,12 +17,7 @@ const BoxesWrapper = styled.div`
 `;
 
 function BoxContainer() {
-  const { monthData, selectedMonth } = useContext(AccountBookContext);
-
-  // 옵셔널 체이닝 자세히 알아보자 , 실행 과정을 콘솔로 리턴값 확인해보기
-  // 개선해보기
-  const selectedTexts =
-    monthData.find((month) => month.id === selectedMonth)?.texts || [];
+  const { monthData } = useContext(AccountBookContext);
 
   return (
     <Container>
@@ -31,7 +26,7 @@ function BoxContainer() {
           <Box key={month.id} id={month.id} month={month.month} />
         ))}
       </BoxesWrapper>
-      <TextBox texts={selectedTexts} />
+      <TextBox />
     </Container>
   );
 }

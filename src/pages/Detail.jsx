@@ -1,6 +1,17 @@
+import styled from "styled-components";
 import { useRef, useEffect, useContext } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { AccountBookContext } from "../context/AccountBookContext";
+
+const StyledTextBox = styled.div`
+  width: 100%;
+  background-color: white;
+  color: black;
+  padding: 20px;
+  margin-top: 20px;
+  text-align: center;
+  border-radius: 10px;
+`;
 
 function Detail() {
   const { monthData, setMonthData, selectedMonth } =
@@ -31,7 +42,7 @@ function Detail() {
       amountRef.current.value = foundText.amount;
       descriptionRef.current.value = foundText.description;
     }
-  }, [id, monthData]);
+  }, [id]);
 
   const handleSave = () => {
     const updatedText = {
@@ -72,7 +83,7 @@ function Detail() {
   };
 
   return (
-    <div>
+    <StyledTextBox>
       <h1>Detail</h1>
       <div>
         <input type="date" name="date" ref={dateRef} />
@@ -83,13 +94,14 @@ function Detail() {
         <br />
         <input type="text" name="description" ref={descriptionRef} />
         <br />
+
+        <button onClick={handleSave}>수정</button>
+        <button onClick={handleDelete}>삭제</button>
+        <Link to="/" state={{ selectedMonth }}>
+          뒤로 가기
+        </Link>
       </div>
-      <button onClick={handleSave}>수정</button>
-      <button onClick={handleDelete}>삭제</button>
-      <Link to="/" state={{ selectedMonth }}>
-        뒤로 가기
-      </Link>
-    </div>
+    </StyledTextBox>
   );
 }
 

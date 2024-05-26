@@ -6,15 +6,15 @@ import { AccountBookProvider } from "./context/AccountBookContext.jsx";
 
 function App() {
   return (
-    <BrowserRouter>
-      <AccountBookProvider>
+    <AccountBookProvider>
+      <BrowserRouter>
         <GlobalStyle />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/detail/:id" element={<Detail />} />
         </Routes>
-      </AccountBookProvider>
-    </BrowserRouter>
+      </BrowserRouter>
+    </AccountBookProvider>
   );
 }
 

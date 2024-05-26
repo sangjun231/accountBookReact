@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useContext } from "react";
+import { AccountBookContext } from "../context/AccountBookContext";
 
 const StyledTextBox = styled.div`
   width: 100%;
@@ -19,12 +21,19 @@ const StyledTextBox = styled.div`
   }
 `;
 
-function TextBox({ texts }) {
+function TextBox() {
+  const { monthData, selectedMonth } = useContext(AccountBookContext);
+
+  // 옵셔널 체이닝 자세히 알아보자 , 실행 과정을 콘솔로 리턴값 확인해보기
+  // 개선해보기
+  const selectedTexts =
+    monthData.find((month) => month.id === selectedMonth)?.texts || [];
+
   return (
     <StyledTextBox>
-      {texts.length > 0 ? (
+      {selectedTexts.length > 0 ? (
         <ul>
-          {texts.map((text) => (
+          {selectedTexts.map((text) => (
             <li key={text.id}>
               <Link to={`/detail/${text.id}`}>
                 {text.date} <br />
