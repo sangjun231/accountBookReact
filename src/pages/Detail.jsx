@@ -1,20 +1,20 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useContext } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
+import { AccountBookContext } from "../context/AccountBookContext";
 
 function Detail() {
+  const { monthData, setMonthData, selectedMonth } =
+    useContext(AccountBookContext);
+
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const initialText = {};
-  const selectedMonth = JSON.parse(localStorage.getItem("selectedMonth")) || 1;
-
-  const dateRef = useRef(initialText.date || "");
-  const itemRef = useRef(initialText.item || "");
-  const amountRef = useRef(initialText.amount || "");
-  const descriptionRef = useRef(initialText.description || "");
+  const dateRef = useRef("");
+  const itemRef = useRef("");
+  const amountRef = useRef("");
+  const descriptionRef = useRef("");
 
   useEffect(() => {
-    const monthData = JSON.parse(localStorage.getItem("monthData")) || [];
     let foundText = null;
 
     monthData.forEach((month) => {
@@ -31,11 +31,9 @@ function Detail() {
       amountRef.current.value = foundText.amount;
       descriptionRef.current.value = foundText.description;
     }
-  }, [id]);
+  }, [id, monthData]);
 
   const handleSave = () => {
-    const monthData = JSON.parse(localStorage.getItem("monthData")) || [];
-
     const updatedText = {
       id,
       date: dateRef.current.value,
@@ -53,14 +51,13 @@ function Detail() {
       };
     });
 
+    setMonthData(updatedMonthData);
     localStorage.setItem("monthData", JSON.stringify(updatedMonthData));
     navigate("/", { state: { selectedMonth } });
   };
 
   const handleDelete = () => {
     if (window.confirm("정말로 삭제하시겠습니까?")) {
-      const monthData = JSON.parse(localStorage.getItem("monthData")) || [];
-
       const deletedMonthData = monthData.map((month) => {
         return {
           ...month,
@@ -68,6 +65,7 @@ function Detail() {
         };
       });
 
+      setMonthData(deletedMonthData);
       localStorage.setItem("monthData", JSON.stringify(deletedMonthData));
       navigate("/", { state: { selectedMonth } });
     }
@@ -77,11 +75,11 @@ function Detail() {
     <div>
       <h1>Detail</h1>
       <div>
-        <input type="text" name="date" ref={dateRef} />
+        <input type="date" name="date" ref={dateRef} />
         <br />
         <input type="text" name="item" ref={itemRef} />
         <br />
-        <input type="text" name="amount" ref={amountRef} />
+        <input type="number" name="amount" ref={amountRef} />
         <br />
         <input type="text" name="description" ref={descriptionRef} />
         <br />

@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { useContext } from "react";
+import { AccountBookContext } from "../context/AccountBookContext";
 
 const StyledBox = styled.div`
   width: 200px;
@@ -11,7 +13,9 @@ const StyledBox = styled.div`
   border-radius: 5px;
 `;
 
-function Box({ id, month, selectedMonth, setSelectedMonth }) {
+function Box({ id, month }) {
+  const { selectedMonth, setSelectedMonth } = useContext(AccountBookContext);
+
   const isSelected = selectedMonth === id;
 
   const handleClick = () => {
