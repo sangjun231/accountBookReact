@@ -17,12 +17,13 @@ const accountBookSlice = createSlice({
   name: "accountBook",
   reducers: {
     updatedMonthData: (state, action) => {
-      // state.monthData.findIndex((id) => id === selectedMonth);
-      // state.selectedMonth;
-      // state.monthData.texts([...month.texts, text]);
+      const { monthId, text } = action.payload;
+      const month = state.monthData.findIndex((month) => month.id === monthId);
+      if (month) {
+        month.texts.push(text);
+      }
     },
     updatedMonth: (state, action) => {
-      // selectedMonth(2)
       state.selectedMonth = action.payload;
     },
   },
@@ -30,3 +31,4 @@ const accountBookSlice = createSlice({
 
 export const { updatedMonthData, updatedMonth } = accountBookSlice.actions;
 export default accountBookSlice.reducer;
+export { initMonthData };

@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { useContext } from "react";
-import { AccountBookContext } from "../context/AccountBookContext";
+// import { useContext } from "react";
+// import { AccountBookContext } from "../context/AccountBookContext";
+import { useSelector } from "react-redux";
 
 const StyledTextBox = styled.div`
   width: 100%;
@@ -22,7 +23,9 @@ const StyledTextBox = styled.div`
 `;
 
 function TextBox() {
-  const { monthData, selectedMonth } = useContext(AccountBookContext);
+  // const { monthData, selectedMonth } = useContext(AccountBookContext);
+  const monthData = useSelector((state) => state.AccountBook.monthData);
+  const selectedMonth = useSelector((state) => state.AccountBook.selectedMonth);
 
   // 옵셔널 체이닝 자세히 알아보자 , 실행 과정을 콘솔로 리턴값 확인해보기
   // 개선해보기

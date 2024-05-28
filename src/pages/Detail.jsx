@@ -1,7 +1,9 @@
 import styled from "styled-components";
-import { useRef, useEffect, useContext } from "react";
+import { useRef, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { AccountBookContext } from "../context/AccountBookContext";
+// import { AccountBookContext } from "../context/AccountBookContext";
+import { useDispatch, useSelector } from "react-redux";
+import { updatedMonthData } from "../redux/slices/accountBookSlice";
 
 const StyledTextBox = styled.div`
   width: 100%;
@@ -14,8 +16,11 @@ const StyledTextBox = styled.div`
 `;
 
 function Detail() {
-  const { monthData, setMonthData, selectedMonth } =
-    useContext(AccountBookContext);
+  // const { monthData, setMonthData, selectedMonth } =
+  //   useContext(AccountBookContext);
+  const monthData = useSelector((state) => state.AccountBook.monthData);
+  const selectedMonth = useSelector((state) => state.AccountBook.selectedMonth);
+  const dispatch = useDispatch();
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -42,7 +47,7 @@ function Detail() {
       amountRef.current.value = foundText.amount;
       descriptionRef.current.value = foundText.description;
     }
-  }, [id]);
+  }, [id, monthData]);
 
   const handleSave = () => {
     const updatedText = {
@@ -53,7 +58,7 @@ function Detail() {
       description: descriptionRef.current.value,
     };
 
-    const updatedMonthData = monthData.map((month) => {
+    const savedMonthData = monthData.map((month) => {
       return {
         ...month,
         texts: month.texts.map((text) =>
@@ -62,8 +67,8 @@ function Detail() {
       };
     });
 
-    setMonthData(updatedMonthData);
-    localStorage.setItem("monthData", JSON.stringify(updatedMonthData));
+    dispatch(updatedMonthData({ monthId: selectedMonth, text: updatedText }));
+    localStorage.setItem("monthData", JSON.stringify(savedMonthData));
     navigate("/", { state: { selectedMonth } });
   };
 
@@ -76,7 +81,9 @@ function Detail() {
         };
       });
 
-      setMonthData(deletedMonthData);
+      dispatch(
+        updatedMonthData({ monthId: selectedMonth, text: deletedMonthData })
+      );
       localStorage.setItem("monthData", JSON.stringify(deletedMonthData));
       navigate("/", { state: { selectedMonth } });
     }

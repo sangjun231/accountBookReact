@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { AccountBookContext } from "../context/AccountBookContext";
 import { useDispatch, useSelector } from "react-redux";
 import { updatedMonthData } from "../redux/slices/accountBookSlice";
 
@@ -13,11 +12,10 @@ const FormWrapper = styled.div`
 
 const AccountBookForm = () => {
   const selectedMonth = useSelector((state) => state.AccountBook.selectedMonth);
-  const { setMonthData } = useContext(AccountBookContext);
   const dispatch = useDispatch();
 
   const onAdd = (text) => {
-    dispatch(updatedMonthData());
+    dispatch(updatedMonthData({ monthId: selectedMonth, text }));
   };
 
   const getDefaultDate = (month) => {
@@ -42,11 +40,10 @@ const AccountBookForm = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    // 콜백함수 쓰자
-    setFormData({
-      ...formData,
+    setFormData((prevData) => ({
+      ...prevData,
       [name]: value,
-    });
+    }));
   };
 
   const validateForm = () => {
