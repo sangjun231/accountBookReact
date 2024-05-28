@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import Box from "./Box";
 import TextBox from "./TextBox";
+import { useContext } from "react";
+import { AccountBookContext } from "../context/AccountBookContext";
 
 const Container = styled.div`
   display: flex;
@@ -14,24 +16,17 @@ const BoxesWrapper = styled.div`
   gap: 10px;
 `;
 
-function BoxContainer({ monthData, selectedMonth, setSelectedMonth }) {
-  const selectedTexts =
-    monthData.find((month) => month.id === selectedMonth)?.texts || [];
+function BoxContainer() {
+  const { monthData } = useContext(AccountBookContext);
 
   return (
     <Container>
       <BoxesWrapper>
         {monthData.map((month) => (
-          <Box
-            key={month.id}
-            id={month.id}
-            month={month.month}
-            selectedMonth={selectedMonth}
-            setSelectedMonth={setSelectedMonth}
-          />
+          <Box key={month.id} id={month.id} month={month.month} />
         ))}
       </BoxesWrapper>
-      <TextBox texts={selectedTexts} />
+      <TextBox />
     </Container>
   );
 }
