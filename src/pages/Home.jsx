@@ -2,8 +2,10 @@ import BoxContainer from "../components/BoxContainer";
 import AccountBookForm from "../components/AccountBookForm";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { updatedMonthData } from "../redux/slices/accountBookSlice";
-import { initMonthData } from "../redux/slices/accountBookSlice";
+import {
+  updatedMonthData,
+  initMonthData,
+} from "../redux/slices/accountBookSlice";
 
 const Home = () => {
   const monthData = useSelector((state) => state.AccountBook.monthData);

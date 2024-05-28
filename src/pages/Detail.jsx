@@ -1,9 +1,8 @@
 import styled from "styled-components";
 import { useRef, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-// import { AccountBookContext } from "../context/AccountBookContext";
 import { useDispatch, useSelector } from "react-redux";
-import { updatedMonthData } from "../redux/slices/accountBookSlice";
+import { updatedMonthData, deleteText } from "../redux/slices/accountBookSlice";
 
 const StyledTextBox = styled.div`
   width: 100%;
@@ -16,8 +15,6 @@ const StyledTextBox = styled.div`
 `;
 
 function Detail() {
-  // const { monthData, setMonthData, selectedMonth } =
-  //   useContext(AccountBookContext);
   const monthData = useSelector((state) => state.AccountBook.monthData);
   const selectedMonth = useSelector((state) => state.AccountBook.selectedMonth);
   const dispatch = useDispatch();
@@ -58,33 +55,25 @@ function Detail() {
       description: descriptionRef.current.value,
     };
 
-    const savedMonthData = monthData.map((month) => {
-      return {
-        ...month,
-        texts: month.texts.map((text) =>
-          text.id === updatedText.id ? updatedText : text
-        ),
-      };
-    });
-
     dispatch(updatedMonthData({ monthId: selectedMonth, text: updatedText }));
-    localStorage.setItem("monthData", JSON.stringify(savedMonthData));
     navigate("/", { state: { selectedMonth } });
   };
 
   const handleDelete = () => {
     if (window.confirm("정말로 삭제하시겠습니까?")) {
-      const deletedMonthData = monthData.map((month) => {
-        return {
-          ...month,
-          texts: month.texts.filter((text) => text.id !== id),
-        };
+      dispatch(deleteText({ monthId: selectedMonth, textId: id }));
+
+      const updatedMonthData = monthData.map((month) => {
+        if (month.id === selectedMonth) {
+          return {
+            ...month,
+            texts: month.texts.filter((text) => text.id !== id),
+          };
+        }
+        return month;
       });
 
-      dispatch(
-        updatedMonthData({ monthId: selectedMonth, text: deletedMonthData })
-      );
-      localStorage.setItem("monthData", JSON.stringify(deletedMonthData));
+      localStorage.setItem("monthData", JSON.stringify(updatedMonthData));
       navigate("/", { state: { selectedMonth } });
     }
   };

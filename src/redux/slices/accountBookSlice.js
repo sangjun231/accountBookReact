@@ -1,11 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initMonthData = [];
-
-// 배열 반복문으로 개선하기
-for (let i = 1; i <= 12; i++) {
-  initMonthData.push({ id: i, month: `${i}월`, texts: [] });
-}
+const initMonthData = Array.from({ length: 12 }, (_, i) => ({
+  id: i + 1,
+  month: `${i + 1}월`,
+  texts: [],
+}));
 
 const initialState = {
   monthData: initMonthData,
@@ -18,9 +17,29 @@ const accountBookSlice = createSlice({
   reducers: {
     updatedMonthData: (state, action) => {
       const { monthId, text } = action.payload;
-      const month = state.monthData.findIndex((month) => month.id === monthId);
-      if (month) {
-        month.texts.push(text);
+      const monthIndex = state.monthData.findIndex(
+        (month) => month.id === monthId
+      );
+      if (monthIndex !== -1) {
+        const textIndex = state.monthData[monthIndex].texts.findIndex(
+          (t) => t.id === text.id
+        );
+        if (textIndex !== -1) {
+          state.monthData[monthIndex].texts[textIndex] = text;
+        } else {
+          state.monthData[monthIndex].texts.push(text);
+        }
+      }
+    },
+    deleteText: (state, action) => {
+      const { monthId, textId } = action.payload;
+      const monthIndex = state.monthData.findIndex(
+        (month) => month.id === monthId
+      );
+      if (monthIndex !== -1) {
+        state.monthData[monthIndex].texts = state.monthData[
+          monthIndex
+        ].texts.filter((t) => t.id !== textId);
       }
     },
     updatedMonth: (state, action) => {
@@ -29,6 +48,7 @@ const accountBookSlice = createSlice({
   },
 });
 
-export const { updatedMonthData, updatedMonth } = accountBookSlice.actions;
+export const { updatedMonthData, deleteText, updatedMonth } =
+  accountBookSlice.actions;
 export default accountBookSlice.reducer;
 export { initMonthData };
