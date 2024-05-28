@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { useState, useEffect, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { AccountBookContext } from "../context/AccountBookContext";
+import { useDispatch, useSelector } from "react-redux";
+import { updatedMonthData } from "../redux/slices/accountBookSlice";
 
 const FormWrapper = styled.div`
   display: flex;
@@ -10,16 +12,12 @@ const FormWrapper = styled.div`
 `;
 
 const AccountBookForm = () => {
-  const { setMonthData, selectedMonth } = useContext(AccountBookContext);
+  const selectedMonth = useSelector((state) => state.AccountBook.selectedMonth);
+  const { setMonthData } = useContext(AccountBookContext);
+  const dispatch = useDispatch();
 
   const onAdd = (text) => {
-    setMonthData((prevData) =>
-      prevData.map((month) =>
-        month.id === selectedMonth
-          ? { ...month, texts: [...month.texts, text] }
-          : month
-      )
-    );
+    dispatch(updatedMonthData());
   };
 
   const getDefaultDate = (month) => {

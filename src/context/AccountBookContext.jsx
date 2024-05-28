@@ -1,20 +1,18 @@
 import { createContext, useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 export const AccountBookContext = createContext(null);
 
 export const AccountBookProvider = ({ children }) => {
-  const initMonthData = [];
+  // const [monthData, setMonthData] = useState(initMonthData);
+  // const [selectedMonth, setSelectedMonth] = useState(
+  //   localStorage.getItem("selectedMonth")
+  //     ? Number(localStorage.getItem("selectedMonth"))
+  //     : 1
+  // );
 
-  for (let i = 1; i <= 12; i++) {
-    initMonthData.push({ id: i, month: `${i}월`, texts: [] });
-  }
-
-  const [monthData, setMonthData] = useState(initMonthData);
-  const [selectedMonth, setSelectedMonth] = useState(
-    localStorage.getItem("selectedMonth")
-      ? Number(localStorage.getItem("selectedMonth"))
-      : 1
-  );
+  const monthData = useSelector((state) => state.AccountBook.monthData);
+  const selectedMonth = useSelector((state) => state.AccountBook.selectedMonth);
 
   useEffect(() => {
     const storedMonthData =
