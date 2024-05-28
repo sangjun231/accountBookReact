@@ -2,7 +2,10 @@ import styled from "styled-components";
 import { useRef, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { updatedMonthData, deleteText } from "../redux/slices/accountBookSlice";
+import {
+  updatedMonthData,
+  deletedMonthData,
+} from "../redux/slices/accountBookSlice";
 
 const StyledTextBox = styled.div`
   width: 100%;
@@ -61,7 +64,7 @@ function Detail() {
 
   const handleDelete = () => {
     if (window.confirm("정말로 삭제하시겠습니까?")) {
-      dispatch(deleteText({ monthId: selectedMonth, textId: id }));
+      dispatch(deletedMonthData({ monthId: selectedMonth, textId: id }));
 
       const updatedMonthData = monthData.map((month) => {
         if (month.id === selectedMonth) {

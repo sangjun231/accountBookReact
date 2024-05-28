@@ -31,7 +31,7 @@ const accountBookSlice = createSlice({
         }
       }
     },
-    deleteText: (state, action) => {
+    deletedMonthData: (state, action) => {
       const { monthId, textId } = action.payload;
       const monthIndex = state.monthData.findIndex(
         (month) => month.id === monthId
@@ -48,7 +48,7 @@ const accountBookSlice = createSlice({
   },
 });
 
-export const { updatedMonthData, deleteText, updatedMonth } =
+export const { updatedMonthData, deletedMonthData, updatedMonth } =
   accountBookSlice.actions;
 export default accountBookSlice.reducer;
 export { initMonthData };
