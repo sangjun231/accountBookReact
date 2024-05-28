@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import Box from "./Box";
 import TextBox from "./TextBox";
-import { useContext } from "react";
-import { AccountBookContext } from "../context/AccountBookContext";
+// import { useContext } from "react";
+// import { AccountBookContext } from "../context/AccountBookContext";
+import { useSelector } from "react-redux";
 
 const Container = styled.div`
   display: flex;
@@ -17,7 +18,8 @@ const BoxesWrapper = styled.div`
 `;
 
 function BoxContainer() {
-  const { monthData } = useContext(AccountBookContext);
+  // const { monthData } = useContext(AccountBookContext);
+  const monthData = useSelector((state) => state.AccountBook.monthData);
 
   return (
     <Container>

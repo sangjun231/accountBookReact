@@ -1,46 +1,48 @@
-import { createContext, useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+// import { createContext, useState, useEffect } from "react";
 
-export const AccountBookContext = createContext(null);
+// export const AccountBookContext = createContext(null);
 
-export const AccountBookProvider = ({ children }) => {
-  // const [monthData, setMonthData] = useState(initMonthData);
-  // const [selectedMonth, setSelectedMonth] = useState(
-  //   localStorage.getItem("selectedMonth")
-  //     ? Number(localStorage.getItem("selectedMonth"))
-  //     : 1
-  // );
+// export const AccountBookProvider = ({ children }) => {
+//   const initMonthData = [];
 
-  const monthData = useSelector((state) => state.AccountBook.monthData);
-  const selectedMonth = useSelector((state) => state.AccountBook.selectedMonth);
+//   for (let i = 1; i <= 12; i++) {
+//     initMonthData.push({ id: i, month: `${i}월`, texts: [] });
+//   }
 
-  useEffect(() => {
-    const storedMonthData =
-      JSON.parse(localStorage.getItem("monthData")) || initMonthData;
+//   const [monthData, setMonthData] = useState(initMonthData);
+//   const [selectedMonth, setSelectedMonth] = useState(
+//     localStorage.getItem("selectedMonth")
+//       ? Number(localStorage.getItem("selectedMonth"))
+//       : 1
+//   );
 
-    setMonthData(storedMonthData);
-  }, []);
+//   useEffect(() => {
+//     const storedMonthData =
+//       JSON.parse(localStorage.getItem("monthData")) || initMonthData;
 
-  useEffect(() => {
-    if (monthData !== initMonthData) {
-      localStorage.setItem("monthData", JSON.stringify(monthData));
-    }
-  }, [monthData]);
-  useEffect(() => {
-    localStorage.setItem("selectedMonth", JSON.stringify(selectedMonth));
-  }, [selectedMonth]);
+//     setMonthData(storedMonthData);
+//   }, []);
 
-  return (
-    <AccountBookContext.Provider
-      value={{
-        monthData,
-        setMonthData,
-        selectedMonth,
-        setSelectedMonth,
-        initMonthData,
-      }}
-    >
-      {children}
-    </AccountBookContext.Provider>
-  );
-};
+//   useEffect(() => {
+//     if (monthData !== initMonthData) {
+//       localStorage.setItem("monthData", JSON.stringify(monthData));
+//     }
+//   }, [monthData]);
+//   useEffect(() => {
+//     localStorage.setItem("selectedMonth", JSON.stringify(selectedMonth));
+//   }, [selectedMonth]);
+
+//   return (
+//     <AccountBookContext.Provider
+//       value={{
+//         monthData,
+//         setMonthData,
+//         selectedMonth,
+//         setSelectedMonth,
+//         initMonthData,
+//       }}
+//     >
+//       {children}
+//     </AccountBookContext.Provider>
+//   );
+// };
