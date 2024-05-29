@@ -65,18 +65,6 @@ function Detail() {
   const handleDelete = () => {
     if (window.confirm("정말로 삭제하시겠습니까?")) {
       dispatch(deletedMonthData({ monthId: selectedMonth, textId: id }));
-
-      const updatedMonthData = monthData.map((month) => {
-        if (month.id === selectedMonth) {
-          return {
-            ...month,
-            texts: month.texts.filter((text) => text.id !== id),
-          };
-        }
-        return month;
-      });
-
-      localStorage.setItem("monthData", JSON.stringify(updatedMonthData));
       navigate("/", { state: { selectedMonth } });
     }
   };
@@ -93,7 +81,6 @@ function Detail() {
         <br />
         <input type="text" name="description" ref={descriptionRef} />
         <br />
-
         <button onClick={handleSave}>수정</button>
         <button onClick={handleDelete}>삭제</button>
         <Link to="/" state={{ selectedMonth }}>

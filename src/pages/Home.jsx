@@ -21,7 +21,7 @@ const Home = () => {
         dispatch(updatedMonthData({ monthId: month.id, text }));
       });
     });
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     if (monthData !== initMonthData) {
