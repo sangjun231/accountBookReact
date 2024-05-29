@@ -17,29 +17,18 @@ const accountBookSlice = createSlice({
   reducers: {
     updatedMonthData: (state, action) => {
       const { monthId, text } = action.payload;
-      const monthIndex = state.monthData.findIndex(
-        (month) => month.id === monthId
-      );
-      if (monthIndex !== -1) {
-        const textIndex = state.monthData[monthIndex].texts.findIndex(
-          (t) => t.id === text.id
-        );
-        if (textIndex !== -1) {
-          state.monthData[monthIndex].texts[textIndex] = text;
-        } else {
-          state.monthData[monthIndex].texts.push(text);
-        }
+      const month = state.monthData.find((month) => month.id === monthId);
+      if (month) {
+        month.texts = [...month.texts.filter((t) => t.id !== text.id), text];
       }
     },
     deletedMonthData: (state, action) => {
       const { monthId, textId } = action.payload;
-      const monthIndex = state.monthData.findIndex(
-        (month) => month.id === monthId
-      );
-      if (monthIndex !== -1) {
-        state.monthData[monthIndex].texts = state.monthData[
-          monthIndex
-        ].texts.filter((t) => t.id !== textId);
+      const month = state.monthData.find((month) => month.id === monthId);
+      console.log(month);
+      if (month) {
+        month.texts = month.texts.filter((t) => t.id !== textId);
+        console.log(month);
       }
     },
     updatedMonth: (state, action) => {
