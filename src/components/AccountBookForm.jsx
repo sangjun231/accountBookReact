@@ -11,7 +11,7 @@ const FormWrapper = styled.div`
 `;
 
 const AccountBookForm = () => {
-  const selectedMonth = useSelector((state) => state.AccountBook.selectedMonth);
+  const selectedMonth = useSelector((state) => state.accountBook.selectedMonth);
   const dispatch = useDispatch();
 
   const onAdd = (text) => {
