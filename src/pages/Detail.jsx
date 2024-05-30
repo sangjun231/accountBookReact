@@ -56,6 +56,7 @@ function Detail() {
 
       localStorage.setItem("monthData", JSON.stringify(updatedMonthData));
       dispatch(deletedMonthData({ monthId: selectedMonth, textId: id }));
+      navigate("/", { state: { selectedMonth } });
     }
   };
 
