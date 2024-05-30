@@ -24,27 +24,13 @@ const AccountBookForm = () => {
     return `${year}-${monthString}-01`;
   };
 
+  // 여기도 reducer로 관리 할 수 없을까?
   const [formData, setFormData] = useState({
     date: getDefaultDate(selectedMonth),
     item: "",
     amount: "",
     description: "",
   });
-
-  useEffect(() => {
-    setFormData((prevData) => ({
-      ...prevData,
-      date: getDefaultDate(selectedMonth),
-    }));
-  }, [selectedMonth]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
 
   const validateForm = () => {
     const { date, item, amount, description } = formData;
@@ -81,6 +67,21 @@ const AccountBookForm = () => {
       });
     }
   };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  useEffect(() => {
+    setFormData((prevData) => ({
+      ...prevData,
+      date: getDefaultDate(selectedMonth),
+    }));
+  }, [selectedMonth]);
 
   return (
     <FormWrapper>

@@ -22,6 +22,7 @@ const accountBookSlice = createSlice({
         month.texts = [...month.texts.filter((t) => t.id !== text.id), text];
       }
     },
+    // Detail페이지 관련 삭제 reducers인데 문제는 없어보임.
     deletedMonthData: (state, action) => {
       const { monthId, textId } = action.payload;
       const month = state.monthData.find((month) => month.id === monthId);

@@ -21,10 +21,8 @@ function Detail() {
   const monthData = useSelector((state) => state.accountBook.monthData);
   const selectedMonth = useSelector((state) => state.accountBook.selectedMonth);
   const dispatch = useDispatch();
-
   const { id } = useParams();
   const navigate = useNavigate();
-
   const dateRef = useRef("");
   const itemRef = useRef("");
   const amountRef = useRef("");
@@ -42,6 +40,9 @@ function Detail() {
     navigate("/", { state: { selectedMonth } });
   };
 
+  // 내부 로직을 위 수정처럼 간략히하고 싶은데 그러면 이상하게 로컬 반영이안됨
+  // useEffect를 사용해보았지만 디테일 페이지로 넘어오면 실행되고
+  // ->오히려 삭제시 실행이 되지 않았음
   const handleDelete = () => {
     if (window.confirm("정말로 삭제하시겠습니까?")) {
       const updatedMonthData = monthData.map((month) => {
