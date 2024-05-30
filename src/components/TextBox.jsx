@@ -21,28 +21,28 @@ const StyledTextBox = styled.div`
 `;
 
 function TextBox() {
-  const monthData = useSelector((state) => state.AccountBook.monthData);
-  const selectedMonth = useSelector((state) => state.AccountBook.selectedMonth);
+  const monthData = useSelector((state) => state.accountBook.monthData);
+  const selectedMonth = useSelector((state) => state.accountBook.selectedMonth);
 
   const selectedTexts =
     monthData.find((month) => month.id === selectedMonth)?.texts || [];
 
   return (
     <StyledTextBox>
-      {selectedTexts.length > 0 ? (
-        <ul>
-          {selectedTexts.map((text) => (
+      <ul>
+        {selectedTexts.length > 0 ? (
+          selectedTexts.map((text) => (
             <li key={text.id}>
               <Link to={`/detail/${text.id}`}>
                 {text.date} <br />
                 {text.item} - {text.description} {text.amount}원
               </Link>
             </li>
-          ))}
-        </ul>
-      ) : (
-        <p>텍스트를 입력해주세요.</p>
-      )}
+          ))
+        ) : (
+          <p>텍스트를 입력해주세요.</p>
+        )}
+      </ul>
     </StyledTextBox>
   );
 }

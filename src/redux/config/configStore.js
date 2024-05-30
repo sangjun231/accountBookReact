@@ -3,7 +3,7 @@ import accountBookSlice from "../slices/accountBookSlice";
 
 const store = configureStore({
   reducer: {
-    AccountBook: accountBookSlice,
+    accountBook: accountBookSlice,
   },
 });
 

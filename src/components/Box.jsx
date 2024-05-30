@@ -1,6 +1,4 @@
 import styled from "styled-components";
-// import { useContext } from "react";
-// import { AccountBookContext } from "../context/AccountBookContext";
 import { useDispatch, useSelector } from "react-redux";
 import { updatedMonth } from "../redux/slices/accountBookSlice";
 
@@ -17,7 +15,7 @@ const StyledBox = styled.div`
 
 function Box({ id, month }) {
   const dispatch = useDispatch();
-  const selectedMonth = useSelector((state) => state.AccountBook.selectedMonth);
+  const selectedMonth = useSelector((state) => state.accountBook.selectedMonth);
 
   const isSelected = selectedMonth === id;
 

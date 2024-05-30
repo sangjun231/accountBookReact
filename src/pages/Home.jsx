@@ -8,8 +8,8 @@ import {
 } from "../redux/slices/accountBookSlice";
 
 const Home = () => {
-  const monthData = useSelector((state) => state.AccountBook.monthData);
-  const selectedMonth = useSelector((state) => state.AccountBook.selectedMonth);
+  const monthData = useSelector((state) => state.accountBook.monthData);
+  const selectedMonth = useSelector((state) => state.accountBook.selectedMonth);
   const dispatch = useDispatch();
 
   useEffect(() => {

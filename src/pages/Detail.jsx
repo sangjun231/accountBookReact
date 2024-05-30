@@ -18,8 +18,8 @@ const StyledTextBox = styled.div`
 `;
 
 function Detail() {
-  const monthData = useSelector((state) => state.AccountBook.monthData);
-  const selectedMonth = useSelector((state) => state.AccountBook.selectedMonth);
+  const monthData = useSelector((state) => state.accountBook.monthData);
+  const selectedMonth = useSelector((state) => state.accountBook.selectedMonth);
   const dispatch = useDispatch();
 
   const { id } = useParams();
@@ -29,6 +29,35 @@ function Detail() {
   const itemRef = useRef("");
   const amountRef = useRef("");
   const descriptionRef = useRef("");
+
+  const handleSave = () => {
+    const updatedText = {
+      id,
+      date: dateRef.current.value,
+      item: itemRef.current.value,
+      amount: amountRef.current.value,
+      description: descriptionRef.current.value,
+    };
+    dispatch(updatedMonthData({ monthId: selectedMonth, text: updatedText }));
+    navigate("/", { state: { selectedMonth } });
+  };
+
+  const handleDelete = () => {
+    if (window.confirm("정말로 삭제하시겠습니까?")) {
+      const updatedMonthData = monthData.map((month) => {
+        if (month.id === selectedMonth) {
+          return {
+            ...month,
+            texts: month.texts.filter((text) => text.id !== id),
+          };
+        }
+        return month;
+      });
+
+      localStorage.setItem("monthData", JSON.stringify(updatedMonthData));
+      dispatch(deletedMonthData({ monthId: selectedMonth, textId: id }));
+    }
+  };
 
   useEffect(() => {
     let foundText = null;
@@ -47,27 +76,7 @@ function Detail() {
       amountRef.current.value = foundText.amount;
       descriptionRef.current.value = foundText.description;
     }
-  }, [id, monthData]);
-
-  const handleSave = () => {
-    const updatedText = {
-      id,
-      date: dateRef.current.value,
-      item: itemRef.current.value,
-      amount: amountRef.current.value,
-      description: descriptionRef.current.value,
-    };
-
-    dispatch(updatedMonthData({ monthId: selectedMonth, text: updatedText }));
-    navigate("/", { state: { selectedMonth } });
-  };
-
-  const handleDelete = () => {
-    if (window.confirm("정말로 삭제하시겠습니까?")) {
-      dispatch(deletedMonthData({ monthId: selectedMonth, textId: id }));
-      navigate("/", { state: { selectedMonth } });
-    }
-  };
+  }, [id]);
 
   return (
     <StyledTextBox>

@@ -25,10 +25,8 @@ const accountBookSlice = createSlice({
     deletedMonthData: (state, action) => {
       const { monthId, textId } = action.payload;
       const month = state.monthData.find((month) => month.id === monthId);
-      console.log(month);
       if (month) {
         month.texts = month.texts.filter((t) => t.id !== textId);
-        console.log(month);
       }
     },
     updatedMonth: (state, action) => {
